@@ -1,12 +1,13 @@
 <template>
     <div>
         <h2>{{titulo}}</h2>        
-        <h2>{{formatoFecha(fechaActual)}}</h2> 
+
+     <h2>{{fechaInicio}}</h2>    
         <h2>{{plazaActual}}</h2>  
 
-         <div>gdfgdfgdfgdgdfgdfgdfgdf </div> 
-        <div class="row">
-         
+     
+        <v-layout></v-layout>
+        <div class="row">         
              <div class="col"><ve-bar :data="chartData" :settings="chartSettings" :events="chartEvents"  height="600px"></ve-bar></div>
         </div>
     </div>
@@ -15,7 +16,6 @@
 <script>
 
 import axios from 'axios'
-import moment from 'moment'
 import {mapState, mapMutations, Store} from 'vuex'
 import BuscadorPrincipal from '@/components/BuscadorPrincipal.vue'
 export default {
@@ -50,29 +50,23 @@ export default {
     },
     computed:{
 
-        ...mapState(['titulo', 'plazaActual', 'tramoActual']),
+        ...mapState(['titulo', 'plazaActual', 'tramoActual','verTurnos','fechaInicio','fechaFin']),
        
       
-
     },
     methods:{
 
         ...mapMutations(['cambiar','cambiar2']),
-
-        formatoFecha(fechaActual){
-
-                return moment(fechaActual).format('L')
-
-        }
+ 
      
     },
      mounted(){
-         axios
-         .get('https://localhost:44384/api/Concentrado/Tramo')
-         .then(response => (this.chartData.rows = response.data))
 
+            axios         
+            // .get(`https://localhost:44384/api/Concentrado/Plaza/Tramo/`)   
+            .get(`https://localhost:44384/api/Concentrado/Plaza/Tramo/${this.fechaInicio}/${this.fechaFin}`)                       
+            .then(response => (this.chartData.rows = response.data))        
      },
-
 
 }
 </script>
