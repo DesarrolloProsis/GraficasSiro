@@ -4,7 +4,8 @@
         <div class="row">         
              <div class="col"><ve-bar :data="chartData" :settings="chartSettings" :events="chartEvents"  height="600px"></ve-bar></div>
         </div>
-            {{getdata}} 
+        <p>{{getdata}} </p>
+        <p>{{rangoFecha}} </p>
     </div>  
 </template>
          
@@ -31,11 +32,12 @@ export default {
          this.chartEvents = {
              dblclick: function(e){  
                 console.log(e)
-                self.actualizaPlazasDetalle(e.name) 
-                self.cambiar(e.name, e.seriesName)   
+                self.plazaActualMutation(e.name)
+                self.actualizaPlazasDetalle(e.name)                    
                 self.cambiar2(e.seriesName)                                                                                                                    
              },
-             click: (e) => {                                     
+             click: (e) => { 
+                 console.log(e)               
              self.actualizaPlazasDetalle(e.name)
              self.modalMutation()
         }                         
@@ -50,17 +52,17 @@ export default {
     },
     computed:{
 
-        ...mapState(['titulo', 'plazaActual', 'tramoActual','verTurnos','fechaInicio','fechaFin','rowsPlazaInicio']),
+        ...mapState(['plazaActual', 'tramoActual','verTurnos','fechaInicio','fechaFin','rowsPlazaInicio','rangoFecha']),
 
         getdata(){
-          return this.chartData.rows = this.rowsPlazaInicio
+           this.chartData.rows = this.rowsPlazaInicio
         }
       
       
     },
     methods:{
 
-        ...mapMutations(['cambiar','cambiar2','modalMutation']),
+        ...mapMutations(['plazaActualMutation','cambiar2','modalMutation']),
         ...mapActions(['actualizaPlazasDetalle'])
 
     },

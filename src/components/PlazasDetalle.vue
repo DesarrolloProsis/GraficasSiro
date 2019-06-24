@@ -1,13 +1,13 @@
 <template>
     <div>
-        <b-button variant="outline-dark" @click="cambiar('0')">Regresar a Plazas</b-button>
+        <!-- <b-button variant="outline-dark" @click="cambiar('0')">Regresar a Plazas</b-button> -->
         <p></p>
         <div class="row">
             <div class="col-xl-6"><ve-pie :data="chartData" :settings="chartSettings"></ve-pie></div>            
             <div class="col-xl-6"><ve-pie :data="chartData2" :settings="chartSettings"></ve-pie></div>   
         </div>  
-          {{getdata}}
-          {{getdata2}}                
+          <p>{{getdata}}</p>
+          <p>{{getdata2}} </p>               
     </div>
 </template>
 
@@ -38,32 +38,31 @@ export default {
     },
     computed:{
         
-        ...mapState(['plazaActual', 'tramoActual','fechaInicio','fechaFin','rowsPlazaDetalleTypePago','rowsPlazaDetalleTypeVehiculo']),
+        ...mapState(['plazaActual', 'tramoActual','fechaInicio','fechaFin','rowsPlazaDetalleTypePago']),
          getdata(){
                     
-          return this.chartData.rows = this.rowsPlazaDetalleTypePago.listTipoPago
+          this.chartData.rows = this.rowsPlazaDetalleTypePago.listTipoPago
+          
  
         },
         getdata2(){
 
-          return this.chartData2.rows = this.rowsPlazaDetalleTypePago.listTipoVehiculo
+          this.chartData2.rows = this.rowsPlazaDetalleTypePago.listTipoVehiculo
         }
                 
         
     },
     methods:{
+    }
+    // },    
+    // created(){
 
-        ...mapMutations(['cambiar'])
-
-    },    
-    created(){
-
-        axios
-       .get(`https://localhost:44384/api/Concentrado/TiposPago/${this.plazaAxi}/${this.fechaInicio}/${this.fechaInicio}`)
-       .then(response => (this.$store.commit('plazasDetalleMutation', Response.data.listTipoPago)))
+    //     axios
+    //    .get(`https://localhost:44384/api/Concentrado/TiposPago/${this.plazaAxi}/${this.fechaInicio}/${this.fechaInicio}`)
+    //    .then(response => (this.$store.commit('plazasDetalleMutation', Response.data.listTipoPago)))
            
 
-    }
+    // }
     
 }
 </script>

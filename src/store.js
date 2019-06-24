@@ -8,24 +8,22 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-
-    titulo:'Todas las Plazas',
-    plazaAxi: '',
-    plazaActual: '0',
+        
+    plazaActual: 'Todas las Plazas',
     tramoActual: '0',        
     fechaInicio: new Date().toISOString().substr(0, 10),
     fechaFin:  new Date().toISOString().substr(0, 10),
     rowsPlazaInicio: [],
     columnsPlazaInicio: [],
-    rowsPlazaDetalleTypePago: [],
-    rowsPlazaDetalleTypeVehiculo: [],
+    rowsPlazaDetalleTypePago: [],    
     columnsPlazaDetalle: [],
-    modal: false
+    modal: false,
+    rangoFecha: null
 
     
   },
   mutations: {
-    cambiar(state, plaza){
+    plazaActualMutation(state, plaza){
 
       state.plazaActual = plaza      
                 
@@ -54,18 +52,8 @@ export default new Vuex.Store({
     },
     plazasDetallePagoMutation(state,array){
 
+      console.log(JSON.stringify(array))
       state.rowsPlazaDetalleTypePago = array 
-      // state.commit.mutations('plazasDetalleVehiculoMutation',array.listTipoVehiculo)
-      // state.rowsPlazaDetalleTypeVehiculo = array2
-      // // Store.commit.actions('actualizaPlazasDetalle')
-
-    },
-    plazasDetalleVehiculoMutation(state,array){
-
-      // alert(JSON.stringify(array))
-      alert('HOLA')      
-      state.rowsPlazaDetalleTypeVehiculo = array
-
 
     },
     modalMutation(state){
@@ -74,6 +62,9 @@ export default new Vuex.Store({
           state.modal = true
        else
           state.modal = false  
+    },
+    rangoFechaMutation(state, rangoNuevo){
+      state.rangoFecha = rangoNuevo
     }
 
   },
@@ -83,18 +74,18 @@ export default new Vuex.Store({
 
       // context.commit('pruebas',rango)
         
-        if(rango === false){
-        axios
-        .get(`https://localhost:44384/api/Concentrado/Plaza/Tramo/${context.state.fechaInicio}/${context.state.fechaInicio}`)
-        .then(Response => (context.commit('plazaInicioMutation', Response.data)))              
+        if(rango === "primary"){
+          
+         axios
+         .get(`https://localhost:44384/api/Concentrado/Plaza/Tramo/${context.state.fechaInicio}/${context.state.fechaFin}`)
+         .then(Response => (context.commit('plazaInicioMutation', Response.data)))                 
 
         }
         else{
-
-         axios
-        .get(`https://localhost:44384/api/Concentrado/Plaza/Tramo/${context.state.fechaInicio}/${context.state.fechaFin}`)
-        .then(Response => (context.commit('plazaInicioMutation', Response.data)))        
-
+ 
+          axios
+          .get(`https://localhost:44384/api/Concentrado/Plaza/Tramo/${context.state.fechaInicio}/${context.state.fechaInicio}`)
+          .then(Response => (context.commit('plazaInicioMutation', Response.data)))     
         }
 
     },
@@ -102,20 +93,21 @@ export default new Vuex.Store({
     actualizaPlazasDetalle(context,plaza){
 
 
-      // if(rango === false){
+      if(context.state.rangoFecha === "primary"){
         
-      //   axios
-      //  .get(`https://localhost:44384/api/Concentrado/TiposPago/${context.state.plazaActual}/${context.state.fechaInicio}/${context.state.fechaInicio}`)
-      //  .then(Response => (context.commit('plazasDetalleMutation', Response.data.ListTipoPago, Response.data.ListTipoVehiculo)))   
+        axios
+       .get(`https://localhost:44384/api/Concentrado/TiposPago/${plaza}/${context.state.fechaInicio}/${context.state.fechaFin}`)
+       .then(Response => (context.commit('plazasDetallePagoMutation', Response.data)))   
         
 
-      // }
-      // else{
+      }
+      else{
         https://localhost:44384/api/Concentrado/TiposPago/Palmillas/2019-02-02/2019-02-02
          axios
         .get(`https://localhost:44384/api/Concentrado/TiposPago/${plaza}/${context.state.fechaInicio}/${context.state.fechaInicio}`)         
         .then(Response => (context.commit('plazasDetallePagoMutation', Response.data)))                 
              
+      }
 
 
     }

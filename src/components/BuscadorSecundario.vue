@@ -1,9 +1,8 @@
 <template>
-  <div>  
-    
+  <div>    
     <v-container grid-list-md>
-      <v-flex xs6>
-       <v-layout row wrap>
+      <v-flex xs3>
+        <div class="row">
           <v-switch
           v-on:click="rangoFecha ? false : true"
             v-model="rangoFecha"
@@ -12,7 +11,16 @@
             value="primary"
             hide-details
           ></v-switch>
-       </v-layout>
+
+          <!-- <v-switch
+          v-on:click="verTurnos ? false : true"
+            v-model="verTurnos"
+            :label="'Visualizar por Turnos'"
+            color="#33C7FF"
+            value="primary"
+            hide-details
+          ></v-switch> -->
+        </div>
       </v-flex>
     </v-container>
 
@@ -44,8 +52,7 @@
                 :value="fechaInicio" 
                 @input="updateFechaInicio"
                 :max = "fechaMax"
-                no-title 
-                
+                no-title                 
                 >
             </v-date-picker>
           </v-menu>
@@ -82,14 +89,16 @@
           </v-menu>                  
         </v-flex>  
         <v-flex xs12 lg6>
-          <b-button @click="actualizaPlazasInicio(rangoFecha)" variant="outline-dark" size="lg" :disabled="oculto">Buscar</b-button>  
-          </v-flex>                                   
+          <b-button @click="actualizaPlazasDetalle(plazaActual)" variant="outline-success" size="lg" :disabled="oculto">Buscar</b-button>            
+          <b-button @click="plazaActualMutation('Todas las Plazas')" variant="outline-dark" size="lg">Regresar a Plazas</b-button>
+          </v-flex>    
       </v-layout>  
       <v-flex xs12 lg6>
       <b-alert show v-model="showDismissibleAlert" variant="danger">La Fecha Fin Debe Ser Mayor :)</b-alert>    
-      </v-flex>  
-
+      </v-flex>          
     </v-container> 
+
+    
   </div>
   
 </template>
@@ -111,7 +120,8 @@ export default {
       fechaMax: new Date().toISOString().substr(0, 10).toString(), 
       menuFechaInicial: false,
       nemuFechaFinal: false,
-      rangoFecha: null,
+      rangoFecha: false,
+      verTurnos: false,
       oculto: false,
 
       }
@@ -120,7 +130,7 @@ export default {
   
   computed: {
 
-    ...mapState(['fechaInicio','fechaFin','pruebas']),
+    ...mapState(['fechaInicio','fechaFin','plazaActual']),
    
      computedDateFormatted() {    
       return this.formatDate(this.fechaInicio);
@@ -132,7 +142,6 @@ export default {
 
       if(this.rangoFecha == "primary")
       {
-
         this.$store.commit('rangoFechaMutation', this.rangoFecha)
         if(this.fechaFin >= this.fechaInicio){  
           this.oculto = false
@@ -145,7 +154,7 @@ export default {
         } 
       }
       else{
-          this.$store.commit('rangoFechaMutation', this.rangoFecha)
+        this.$store.commit('rangoFechaMutation', this.rangoFecha)
           this.oculto = false
           return false
       }   
@@ -154,8 +163,8 @@ export default {
   },
 
   methods: {  
-
-    ...mapActions(['actualizaPlazasInicio']),
+    ...mapMutations(['plazaActualMutation']),
+    ...mapActions(['actualizaPlazasDetalle']),
 
     formatDate(date) {
 

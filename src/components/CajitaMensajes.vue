@@ -3,10 +3,12 @@
 
         <div>
             <v-flex text-xs-center>
-          <h3>{{titulo}}</h3>  
-            </v-flex>
-          <h5>Fecha Seleccionada Inicio:  {{fechaInicio}}</h5>    
-          <h5>Fecha Seleccionada Fin:  {{fechaFin}}</h5>    
+          <h3>{{plazaActual}}</h3>  
+            </v-flex>  
+          <h5>Fecha Seleccionada Inicio:  {{fechaInicio}}</h5> 
+         <div v-if="rangoFecha">
+          <h5>Fecha Seleccionada Fin:  {{fechaFin}}</h5>  
+          </div>      
 
         </div>
  
@@ -23,7 +25,7 @@ import { mapState, mapMutations, mapActions, Store } from "vuex";
 export default {
 
     computed:{
-        ...mapState(['titulo','fechaInicio','fechaFin','rowsPlazaInicio'])
+        ...mapState(['plazaActual','fechaInicio','fechaFin','rangoFecha'])
     }
 }
   </script>
