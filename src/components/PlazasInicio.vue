@@ -1,22 +1,17 @@
 <template>
     <div>
-        <h2>{{titulo}}</h2>        
-
-     <h2>{{fechaInicio}}</h2>    
-        <h2>{{plazaActual}}</h2>  
-
-     
         <v-layout></v-layout>
         <div class="row">         
              <div class="col"><ve-bar :data="chartData" :settings="chartSettings" :events="chartEvents"  height="600px"></ve-bar></div>
         </div>
-    </div>
+            {{getdata}} 
+    </div>  
 </template>
-
+         
 <script>
 
 import axios from 'axios'
-import {mapState, mapMutations, Store} from 'vuex'
+import {mapState, mapMutations, Store, mapActions} from 'vuex'
 import BuscadorPrincipal from '@/components/BuscadorPrincipal.vue'
 export default {
 
@@ -35,12 +30,17 @@ export default {
      
          this.chartEvents = {
              dblclick: function(e){  
+                console.log(e)
+                self.actualizaPlazasDetalle(e.name) 
                 self.cambiar(e.name, e.seriesName)   
                 self.cambiar2(e.seriesName)                                                                                                                    
-             }                         
+             },
+             click: (e) => {                                     
+             self.actualizaPlazasDetalle(e.name)
+             self.modalMutation()
+        }                         
          }
-        return{   
-            
+        return{                          
             fechaActual: Date(),
             chartData: {
             columns: ['nombrePlaza', 'cuerpoA', 'cuerpoB', 'cuerpoC', 'cuerpoD'],
@@ -50,23 +50,27 @@ export default {
     },
     computed:{
 
-        ...mapState(['titulo', 'plazaActual', 'tramoActual','verTurnos','fechaInicio','fechaFin']),
-       
+        ...mapState(['titulo', 'plazaActual', 'tramoActual','verTurnos','fechaInicio','fechaFin','rowsPlazaInicio']),
+
+        getdata(){
+          return this.chartData.rows = this.rowsPlazaInicio
+        }
+      
       
     },
     methods:{
 
-        ...mapMutations(['cambiar','cambiar2']),
- 
-     
+        ...mapMutations(['cambiar','cambiar2','modalMutation']),
+        ...mapActions(['actualizaPlazasDetalle'])
+
     },
-     mounted(){
+     created(){
 
             axios         
             // .get(`https://localhost:44384/api/Concentrado/Plaza/Tramo/`)   
-            .get(`https://localhost:44384/api/Concentrado/Plaza/Tramo/${this.fechaInicio}/${this.fechaFin}`)                       
-            .then(response => (this.chartData.rows = response.data))        
-     },
+            .get(`https://localhost:44384/api/Concentrado/Plaza/Tramo/${this.fechaInicio}/${this.fechaInicio}`)   
+            .then(response => (this.$store.commit('plazaInicioMutation',response.data)))                                                   
+     }  
 
 }
 </script>

@@ -1,8 +1,5 @@
 <template>
-  <div>
-    <h2>{{fechaInicio}}</h2>
-    <h2>{{fechaFin}}</h2>
-      
+  <div>    
     <v-container grid-list-md>
       <v-flex xs6>
         <div class="row">
@@ -42,7 +39,14 @@
                 v-on="on"
               ></v-text-field>
             </template>
-            <v-date-picker :value="fechaInicio" no-title @input="updateFechaInicio"></v-date-picker>
+            <v-date-picker 
+                :value="fechaInicio" 
+                @input="updateFechaInicio"
+                :max = "fechaMax"
+                no-title 
+                
+                >
+            </v-date-picker>
           </v-menu>
         </v-flex>
         <v-flex xs12 lg3 v-if="rangoFecha">
@@ -62,19 +66,29 @@
                 v-model="computedDateFormatted2"
                 label="Fin de Busqueda"
                 persistent-hint
-                prepend-icon="event"                
+                prepend-icon= "event" 
                 readonly
                 v-on="on"
               ></v-text-field>
             </template>
-            <v-date-picker :value="fechaFin" no-title @input="updateFechaFin"></v-date-picker>                          
+            <v-date-picker 
+                :value="fechaFin"                 
+                @input="updateFechaFin"
+                :max = "fechaMax"
+                no-title 
+              >
+            </v-date-picker>                          
           </v-menu>                  
         </v-flex>  
-        <v-flex xs12 lg3>
-          <b-button variant="outline-dark" size="lg">Dark</b-button>  
-          </v-flex>             
-      </v-layout>
-    </v-container>   
+        <v-flex xs12 lg6>
+          <b-button @click="actualizaPlazasInicio(rangoFecha)" variant="outline-dark" size="lg" :disabled="oculto">Buscar</b-button>  
+          </v-flex>                                   
+      </v-layout>  
+      <v-flex xs12 lg6>
+      <b-alert show v-model="showDismissibleAlert" variant="danger">La Fecha Fin Debe Ser Mayor :)</b-alert>    
+      </v-flex>          
+    </v-container> 
+
     
   </div>
   
@@ -84,16 +98,21 @@
 <script>
 import axios from "axios";
 import moment from "moment";
-import { mapState, mapMutations, Store } from "vuex";
-import { constants } from 'crypto';
+
+
+import { mapState, mapMutations, mapActions, Store } from "vuex";
+
 
 export default {
+
   data(){ 
 
-      return{
+      return{    
+      fechaMax: new Date().toISOString().substr(0, 10).toString(), 
       menuFechaInicial: false,
       nemuFechaFinal: false,
       rangoFecha: false,
+      oculto: false,
 
       }
 
@@ -101,7 +120,7 @@ export default {
   
   computed: {
 
-    ...mapState(['fechaInicio','fechaFin']),
+    ...mapState(['fechaInicio','fechaFin','pruebas']),
    
      computedDateFormatted() {    
       return this.formatDate(this.fechaInicio);
@@ -109,16 +128,36 @@ export default {
     computedDateFormatted2() {      
       return this.formatDate(this.fechaFin);
     },
+    showDismissibleAlert(){
+
+      if(this.rangoFecha == "primary")
+      {
+        if(this.fechaFin >= this.fechaInicio){  
+          this.oculto = false
+          return false
+        }
+        else{    
+             
+          this.oculto = true      
+          return true
+        } 
+      }
+      else{
+          this.oculto = false
+          return false
+      }   
+    }
 
   },
 
   methods: {  
 
+    ...mapActions(['actualizaPlazasInicio']),
 
     formatDate(date) {
 
       if (!date) return null;
-      else return moment(date).format("LLL");
+      else return moment(date).format("L");
 
     },
     updateFechaInicio (e) {
@@ -129,7 +168,6 @@ export default {
       
       this.$store.commit('fechaFinMutate', e)
     }
-
 
 
   

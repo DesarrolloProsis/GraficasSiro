@@ -1,10 +1,18 @@
 <template>
   <div>  
+     <CajitaMensaje></CajitaMensaje> 
     <div v-if="plazaActual === '0'"> 
-     <BuscadorPrincipal></BuscadorPrincipal>   
+      <v-container grid-list-md>
+        <v-flex>     
+       
+            <BuscadorPrincipal></BuscadorPrincipal>
+            <ModalInfo></ModalInfo>
+                   
+        </v-flex>
+   </v-container>
+ 
      </div>  
-     <div v-else> 
-       <h2>aslñlañflasñdlasñ</h2>
+     <div v-else>        
      </div>  
     <!-- <div v-if="verTurnos2 === false">         -->
       <div v-if="plazaActual === '0'">                
@@ -13,11 +21,10 @@
       <div v-else>         
         <PlazasDetalle></PlazasDetalle>
       </div>
-    </div>
     <!-- <div v-else-if="verTurnos2 === true">           
       <PlazasInicioTurnos></PlazasInicioTurnos>
     </div> -->
-  <!-- </div> -->
+  </div> 
 </template>
 
 
@@ -28,6 +35,8 @@ import PlazasInicio from "@/components/PlazasInicio.vue";
 import PlazasDetalle from "@/components/PlazasDetalle.vue";
 import PlazasInicioTurnos from "@/components/PlazasInicioTurnos.vue";
 import BuscadorPrincipal from "@/components/BuscadorPrincipal.vue";
+import CajitaMensaje from "@/components/CajitaMensajes.vue";
+import ModalInfo from"@/components/ModalInfo.vue";
 import { mapState, mapMutations } from "vuex";
 export default {
   name: "Graficas",
@@ -35,7 +44,9 @@ export default {
     PlazasInicio,
     PlazasDetalle,
     PlazasInicioTurnos,
-    BuscadorPrincipal
+    BuscadorPrincipal,
+    CajitaMensaje,
+    ModalInfo
   },
   computed: {
 

@@ -8,7 +8,7 @@
     <v-layout></v-layout>
     <div class="row">
       <div class="col">
-        <ve-histogram :data="chartData" :settings="chartSettings" height="600px"></ve-histogram>
+        <ve-histogram :data="chartData" :settings="chartSettings"  height="600px"></ve-histogram>
       </div>
     </div>
   </div>
@@ -18,6 +18,7 @@
 import axios from "axios";
 import { mapState, mapMutations, Store } from "vuex";
 import BuscadorPrincipal from "@/components/BuscadorPrincipal.vue";
+
 export default {
   name: "PlazasInicio",
   components: {
@@ -29,7 +30,7 @@ export default {
                         
     };
 
-    return {
+    return {      
       fechaActual: Date(),      
       chartData: {
         columns: [],
