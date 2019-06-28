@@ -1,10 +1,9 @@
-<template>
-  <div>  
-    
-    <v-container grid-list-md>
-      <v-flex xs6>
-       <v-layout row wrap>
-          <v-switch
+<template> 
+<div>
+    <v-container>
+      <v-layout>
+      <v-flex xs12>
+        <v-switch
           v-on:click="rangoFecha ? false : true"
             v-model="rangoFecha"
             :label="'Seleccionar Intervalo'"
@@ -12,14 +11,12 @@
             value="primary"
             hide-details
           ></v-switch>
-       </v-layout>
-      </v-flex>
-    </v-container>
+      </v-flex> 
+      </v-layout> 
 
-    <v-container grid-list-md>
-      <v-layout row wrap>
-        <v-flex xs12 lg3>
-          <v-menu            
+      <v-layout row wrap>    
+        <v-flex xs5>        
+         <v-menu            
             v-model="menuFechaInicial"
             :close-on-content-click="false"
             :nudge-right="40"            
@@ -50,8 +47,9 @@
             </v-date-picker>
           </v-menu>
         </v-flex>
-        <v-flex xs12 lg3 v-if="rangoFecha">
-          <v-menu            
+
+         <v-flex xs5  v-if="rangoFecha"> 
+           <v-menu            
             v-model="nemuFechaFinal"          
             :close-on-content-click="false"
             :nudge-right="40"
@@ -79,20 +77,23 @@
                 no-title 
               >
             </v-date-picker>                          
-          </v-menu>                  
-        </v-flex>  
-        <v-flex xs12 lg6>
-          <b-button @click="actualizaPlazasInicio(rangoFecha)" variant="outline-dark" size="lg" :disabled="oculto">Buscar</b-button>  
-          </v-flex>                                   
-      </v-layout>  
+          </v-menu>         
+      </v-flex>
+      <v-flex xs2>
+        <v-btn  outline  large color=#33BF17 @click="actualizaPlazasInicio(rangoFecha)" :disabled="oculto">Buscar</v-btn>
+          <!-- <b-button @click="actualizaPlazasInicio(rangoFecha)" variant="outline-dark" size="lg" :disabled="oculto">Buscar</b-button>   -->
+      </v-flex>                                   
       <v-flex xs12 lg6>
       <b-alert show v-model="showDismissibleAlert" variant="danger">La Fecha Fin Debe Ser Mayor :)</b-alert>    
       </v-flex>  
-
-    </v-container> 
-  </div>
-  
+      </v-layout>
+    </v-container>
+</div> 
 </template>
+    
+    
+
+
 
 
 <script>
@@ -177,3 +178,8 @@ export default {
   }
 };
 </script>
+<style>
+    .sinpading{
+padding: 0px
+    }
+</style>

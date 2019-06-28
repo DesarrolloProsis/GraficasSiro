@@ -1,27 +1,29 @@
 <template>
-<div>    
-  <CajitaMensaje></CajitaMensaje>
-    <div v-if="plazaActual === 'Todas las Plazas'">
-      <v-container grid-list-md>
-        <v-flex>
+  <v-app>
+    <h1 align="center">Grafica De Trafico</h1>        
+     <v-container>
+       <v-layout>
+         <v-flex xs4>
+        <CajitaMensaje></CajitaMensaje>
+        </v-flex>        
+          <v-flex xs7 v-if="plazaActual === 'Todas las Plazas'">
           <BuscadorPrincipal></BuscadorPrincipal>
-          <ModalInfo></ModalInfo>
-        </v-flex>
-      </v-container>
-    </div>
-    <div v-else>
-      <BuscadorSecundario></BuscadorSecundario>
-      <PlazasDetalle></PlazasDetalle>
-    </div>
+           <ModalInfo></ModalInfo>    
+          </v-flex> 
+          <v-flex v-else>
+              <PlazasDetalle></PlazasDetalle>
+          </v-flex>                      
+       </v-layout>
+    </v-container>
 
     <div v-if="plazaActual === 'Todas las Plazas'">
       <PlazasInicio></PlazasInicio>
     </div>
     <div v-else></div>
-  </div>
+  </v-app>  
 </template>
 
-
+// LaVacaLoca16
 
 
 <script>

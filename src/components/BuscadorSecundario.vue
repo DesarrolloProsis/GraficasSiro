@@ -1,6 +1,8 @@
 <template>
   <div>    
-    <v-container grid-list-md>
+ 
+
+   <v-container grid-list-md>
       <v-flex xs3>
         <div class="row">
           <v-switch
@@ -12,14 +14,15 @@
             hide-details
           ></v-switch>
 
-          <!-- <v-switch
-          v-on:click="verTurnos ? false : true"
+            <v-switch
+            v-on:click="verTramos ? false : true"
             v-model="verTurnos"
-            :label="'Visualizar por Turnos'"
+            :label="'Visualizar por Tramos'"
             color="#33C7FF"
             value="primary"
             hide-details
-          ></v-switch> -->
+          ></v-switch> 
+
         </div>
       </v-flex>
     </v-container>
@@ -91,16 +94,16 @@
         <v-flex xs12 lg6>
           <b-button @click="actualizaPlazasDetalle(plazaActual)" variant="outline-success" size="lg" :disabled="oculto">Buscar</b-button>            
           <b-button @click="plazaActualMutation('Todas las Plazas')" variant="outline-dark" size="lg">Regresar a Plazas</b-button>
-          </v-flex>    
+          </v-flex> 
+
       </v-layout>  
       <v-flex xs12 lg6>
       <b-alert show v-model="showDismissibleAlert" variant="danger">La Fecha Fin Debe Ser Mayor :)</b-alert>    
-      </v-flex>          
-    </v-container> 
-
+      </v-flex> 
+        
+    </v-container>
     
-  </div>
-  
+  </div>  
 </template>
 
 
@@ -121,8 +124,10 @@ export default {
       menuFechaInicial: false,
       nemuFechaFinal: false,
       rangoFecha: false,
-      verTurnos: false,
+      verTramos: false,
       oculto: false,
+      items: ['hola','adios'],
+      select: ''
 
       }
 

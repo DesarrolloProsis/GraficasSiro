@@ -2,10 +2,9 @@
     <div>
         <v-layout></v-layout>
         <div class="row">         
-             <div class="col"><ve-bar :data="chartData" :settings="chartSettings" :events="chartEvents"  height="600px"></ve-bar></div>
+             <div class="col"><ve-histogram :data="chartData" :settings="chartSettings" :events="chartEvents"  height="600px"></ve-histogram></div>
         </div>
-        <p>{{getdata}} </p>
-        <p>{{rangoFecha}} </p>
+        <p>{{getdata}} </p>        
     </div>  
 </template>
          
@@ -24,7 +23,7 @@ export default {
         var self = this
         this.chartSettings = {
 
-            stack:{'nombrePlaza': ['cuerpoA', 'cuerpoB','cuerpoC','cuerpoD']},
+            // stack:{'nombrePlaza': ['cuerpoA', 'cuerpoB','cuerpoC','cuerpoD']},
             selectedMode: 'single',
             hoverAnimation: false
         }
@@ -47,7 +46,7 @@ export default {
             chartData: {
             columns: ['nombrePlaza', 'cuerpoA', 'cuerpoB', 'cuerpoC', 'cuerpoD'],
             rows: []
-            }
+            }                    
         }
     },
     computed:{

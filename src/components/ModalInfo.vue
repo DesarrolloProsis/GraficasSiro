@@ -10,7 +10,7 @@
           <PlazasDetalle></PlazasDetalle>               
         </v-card-text>
         <v-card-actions>
-          <v-spacer></v-spacer>
+          <v-spacer></v-spacer>          
             <v-btn color="blue darken-1" flat @click="this.modalMutation">Cerrar</v-btn>          
         </v-card-actions>
       </v-card>

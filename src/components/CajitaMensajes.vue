@@ -1,17 +1,16 @@
 <template>  
-    <v-container fill-height>
-
-        <div>
-            <v-flex text-xs-center>
-          <h3>{{plazaActual}}</h3>  
+    <v-container>
+      <v-layout>
+        <v-flex xs12 text-xs-center>
+          <v-flex>
+          <h2>{{plazaActual}}</h2>  
             </v-flex>  
-          <h5>Fecha Seleccionada Inicio:  {{fechaInicio}}</h5> 
+          <h3>Fecha Seleccionada Inicio:  {{fechaInicio}}</h3> 
          <div v-if="rangoFecha">
-          <h5>Fecha Seleccionada Fin:  {{fechaFin}}</h5>  
+          <h3>Fecha Seleccionada Fin:  {{fechaFin}}</h3>  
           </div>      
-
-        </div>
- 
+        </v-flex>
+      </v-layout>
     </v-container>  
 </template>
 
