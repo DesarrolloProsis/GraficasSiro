@@ -2,7 +2,7 @@
     <div>
         <v-layout></v-layout>
         <div class="row">         
-             <div class="col"><ve-histogram :data="chartData" :settings="chartSettings" :events="chartEvents"  height="600px"></ve-histogram></div>
+             <div class="col"><ve-histogram :data="chartData" :settings="chartSettings" :events="chartEvents" :toolbox="toolbox"  height="600px"></ve-histogram></div>
         </div>
         <p>{{getdata}} </p>        
     </div>  
@@ -26,18 +26,22 @@ export default {
             // stack:{'nombrePlaza': ['cuerpoA', 'cuerpoB','cuerpoC','cuerpoD']},
             selectedMode: 'single',
             hoverAnimation: false
-        }
+        },
      
          this.chartEvents = {
              dblclick: function(e){  
                 console.log(e)
                 self.plazaActualMutation(e.name)
-                self.actualizaPlazasDetalle(e.name)                    
+                var pruebas = this.buscarNombreTramo(e.name, e.seriesName)
+                self.actualizaPlazasDetalle()                    
                 self.cambiar2(e.seriesName)                                                                                                                    
              },
              click: (e) => { 
-                 console.log(e)               
-             self.actualizaPlazasDetalle(e.name)
+             console.log(e)   
+             self.plazaActualModalMutation(e.name)
+             self.letraTramoActualMutation(e.seriesName)
+             self.tramoActualMutation(e.seriesName)        
+             self.actualizaPlazasDetalle(e.name, e.seriesName.substr(6, 1))
              self.modalMutation()
         }                         
          }
@@ -61,8 +65,9 @@ export default {
     },
     methods:{
 
-        ...mapMutations(['plazaActualMutation','cambiar2','modalMutation']),
-        ...mapActions(['actualizaPlazasDetalle'])
+        ...mapMutations(['plazaActualMutation','tramoActualMutation','modalMutation','plazaActualModalMutation','letraTramoActualMutation']),
+        ...mapActions(['actualizaPlazasDetalle']),
+
 
     },
      created(){

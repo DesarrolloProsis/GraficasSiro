@@ -4,7 +4,9 @@
     <v-dialog v-model="this.modal" persistent max-width="1000px" :lazy="true" >
       <v-card>
         <v-card-title>
-          <span class="headline">Pre-Visualizacion</span>          
+          <span class="headline">
+            <p><span style="color:#17BF54">Plaza:</span> &nbsp; {{plazaActualModal}}&nbsp; &nbsp; <span style="color:#17BF54">Nombre del Tramo: &nbsp; </span> {{tramoActual}}</p>
+              </span>          
         </v-card-title>
         <v-card-text>
           <PlazasDetalle></PlazasDetalle>               
@@ -31,7 +33,7 @@ export default {
     },
     computed: {
         
-        ...mapState(['modal','titulo'])
+        ...mapState(['modal','titulo','plazaActualModal','tramoActual'])
     },
     methods:{
         ...mapMutations(['modalMutation'])
